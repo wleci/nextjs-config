@@ -1,103 +1,207 @@
-import Image from "next/image";
+"use client";
+
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import {
+  Github,
+  ExternalLink,
+  Menu,
+  X,
+  Zap,
+  Code,
+  Palette,
+} from "lucide-react";
+import { useState } from "react";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  return (
+    <div className="min-h-screen bg-white dark:bg-slate-900">
+      {/* Navbar */}
+      <nav className="fixed top-0 w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 z-50">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <motion.div
+              className="flex items-center gap-2"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm">W</span>
+              </div>
+              <span className="font-bold text-xl">Wleci</span>
+            </motion.div>
+
+            {/* Desktop Menu */}
+            <motion.div
+              className="hidden md:flex items-center gap-8"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <a
+                href="#home"
+                className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors"
+              >
+                Home
+              </a>
+              <a
+                href="#features"
+                className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors"
+              >
+                Features
+              </a>
+              <a
+                href="#docs"
+                className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors"
+              >
+                Docs
+              </a>
+              <Button variant="outline" size="sm" className="gap-2">
+                <Github className="h-4 w-4" />
+                GitHub
+              </Button>
+            </motion.div>
+
+            {/* Mobile Menu Button */}
+            <motion.button
+              className="md:hidden"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              {isMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </motion.button>
+          </div>
+
+          {/* Mobile Menu */}
+          {isMenuOpen && (
+            <motion.div
+              className="md:hidden py-4 border-t border-slate-200 dark:border-slate-700"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+            >
+              <div className="flex flex-col gap-4">
+                <a href="#home" className="text-slate-600 dark:text-slate-300">
+                  Home
+                </a>
+                <a
+                  href="#features"
+                  className="text-slate-600 dark:text-slate-300"
+                >
+                  Features
+                </a>
+                <a href="#docs" className="text-slate-600 dark:text-slate-300">
+                  Docs
+                </a>
+                <Button variant="outline" size="sm" className="gap-2 w-fit">
+                  <Github className="h-4 w-4" />
+                  GitHub
+                </Button>
+              </div>
+            </motion.div>
+          )}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </nav>
+
+      {/* Hero Section */}
+      <section id="home" className="pt-24 pb-20 px-4">
+        <div className="container mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <h1 className="text-5xl md:text-7xl font-bold mb-6">
+              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                Modern
+              </span>
+              <br />
+              Next.js Template
+            </h1>
+          </motion.div>
+
+          <motion.p
+            className="text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            Beautiful, fast, and modern web applications with Framer Motion,
+            Tailwind CSS, and shadcn/ui components.
+          </motion.p>
+
+          <motion.div
+            className="flex gap-4 justify-center flex-wrap mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <Button
+              size="lg"
+              className="gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+            >
+              <ExternalLink className="h-5 w-5" />
+              Get Started
+            </Button>
+            <Button variant="outline" size="lg" className="gap-2">
+              <Github className="h-5 w-5" />
+              View Source
+            </Button>
+          </motion.div>
+
+          {/* Feature Cards */}
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
+            {[
+              {
+                icon: Zap,
+                title: "Lightning Fast",
+                description:
+                  "Optimized performance with Next.js 15 and modern best practices",
+              },
+              {
+                icon: Code,
+                title: "Developer Ready",
+                description:
+                  "TypeScript, ESLint, and Prettier configured out of the box",
+              },
+              {
+                icon: Palette,
+                title: "Beautiful Design",
+                description:
+                  "Modern UI with Tailwind CSS and shadcn/ui components",
+              },
+            ].map((feature, index) => (
+              <motion.div
+                key={index}
+                className="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+                whileHover={{ y: -5 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <feature.icon className="h-12 w-12 text-blue-600 mb-4 mx-auto" />
+                <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+                <p className="text-slate-600 dark:text-slate-300">
+                  {feature.description}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
     </div>
   );
 }
