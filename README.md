@@ -17,6 +17,7 @@ A modern Next.js template with beautiful animations, responsive navbar, and eleg
 - 📱 **Responsive** - Mobile-first design
 - ⚡ **Performance** - Optimized for speed with Turbopack
 - 🔧 **TypeScript** - Full type safety
+- 🔍 **SEO Ready** - Auto-generated sitemap.xml and robots.txt
 
 ## 🛠️ Tech Stack
 
@@ -54,7 +55,19 @@ A modern Next.js template with beautiful animations, responsive navbar, and eleg
    pnpm install
    ```
 
-3. **Run the development server**
+3. **Configure environment variables**
+
+   ```bash
+   cp .env.example .env.local
+   ```
+
+   Update `.env.local` with your domain:
+
+   ```
+   NEXT_PUBLIC_BASE_URL=https://your-domain.com
+   ```
+
+4. **Run the development server**
 
    ```bash
    npm run dev
@@ -66,7 +79,7 @@ A modern Next.js template with beautiful animations, responsive navbar, and eleg
 
    > **Note:** This project uses Turbopack for faster development
 
-4. **Open your browser**
+5. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
 
 ## 📦 What's Included
@@ -118,11 +131,31 @@ const customVariant = {
 };
 ```
 
+### SEO Configuration
+
+Update your domain in the SEO route handlers:
+
+```typescript
+// src/app/(seo)/sitemap.xml/route.ts
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://your-domain.com";
+```
+
+Add your domain to `.env.local`:
+
+```
+NEXT_PUBLIC_BASE_URL=https://your-domain.com
+```
+
 ## 📁 Project Structure
 
 ```
 src/
 ├── app/
+│   ├── (seo)/
+│   │   ├── robots.txt/
+│   │   │   └── route.ts
+│   │   └── sitemap.xml/
+│   │       └── route.ts
 │   ├── globals.css
 │   ├── layout.tsx
 │   └── page.tsx
@@ -173,3 +206,19 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 ⭐ **Star this repository if you found it helpful!**
+
+### SEO Configuration
+
+The SEO files automatically use your environment variables:
+
+```typescript
+// Automatically reads from .env.local
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+```
+
+**Available URLs:**
+
+- `/sitemap.xml` - Dynamic sitemap
+- `/robots.txt` - Dynamic robots.txt
+
+Both files use your `NEXT_PUBLIC_BASE_URL` from `.env.local`
