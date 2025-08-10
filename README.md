@@ -151,11 +151,18 @@ NEXT_PUBLIC_BASE_URL=https://your-domain.com
 ```
 src/
 ├── app/
+│   ├── .well-known/
+│   │   └── security.txt/
+│   │       └── route.ts
 │   ├── (seo)/
 │   │   ├── robots.txt/
 │   │   │   └── route.ts
+│   │   ├── security.txt/
+│   │   │   └── route.ts
 │   │   └── sitemap.xml/
 │   │       └── route.ts
+│   ├── health/
+│   │   └── route.ts
 │   ├── globals.css
 │   ├── layout.tsx
 │   └── page.tsx
@@ -220,5 +227,8 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
 - `/sitemap.xml` - Dynamic sitemap
 - `/robots.txt` - Dynamic robots.txt
+- `/security.txt` - Security contact information
+- `/.well-known/security.txt` - RFC 9116 compliant security.txt
+- `/health` - Health check endpoint (JSON)
 
-Both files use your `NEXT_PUBLIC_BASE_URL` from `.env.local`
+SEO files use your `NEXT_PUBLIC_BASE_URL` from `.env.local`
