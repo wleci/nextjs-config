@@ -91,7 +91,7 @@ A complete full-stack Next.js template with authentication, role-based access co
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/wleci-nextjs-template.git
+   git clone https://github.com/wleci/nextjs-config.git
    cd wleci-nextjs-template
    ```
 
