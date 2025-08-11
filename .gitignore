@@ -30,8 +30,12 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# Environment files (NEVER commit sensitive data)
 .env
+.env.local
+.env.production
+.env.staging
+.env.development
 
 # vercel
 .vercel
@@ -40,10 +44,13 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# database
+# Database files
 *.db
 *.db-journal
-
-/src/generated/prisma
-
 dev.db
+test.db
+/prisma/dev.db
+/prisma/test.db
+
+# Prisma generated files
+/src/generated/prisma

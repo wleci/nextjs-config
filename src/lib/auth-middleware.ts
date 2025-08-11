@@ -27,6 +27,38 @@ export async function checkAuth() {
 }
 
 /**
+ * Middleware helper to check admin role for API routes
+ * Returns null if user is admin, or error response if not
+ */
+export async function checkAdminAuth() {
+    try {
+        const session = await auth()
+
+        if (!session || !session.user) {
+            return NextResponse.json(
+                { error: 'Unauthorized - Please log in' },
+                { status: 401 }
+            )
+        }
+
+        if (session.user.role !== 'ADMIN') {
+            return NextResponse.json(
+                { error: 'Forbidden - Admin access required' },
+                { status: 403 }
+            )
+        }
+
+        return null // No error, user is admin
+    } catch (error) {
+        console.error('Admin auth check failed:', error)
+        return NextResponse.json(
+            { error: 'Authentication failed' },
+            { status: 500 }
+        )
+    }
+}
+
+/**
  * Get current user session
  * Returns session or throws error
  */

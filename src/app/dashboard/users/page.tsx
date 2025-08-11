@@ -5,7 +5,9 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
 import { ToastContainer, useToast } from "@/components/ui/toast";
-import { Plus, Loader2, Edit, Trash2, X, Save } from "lucide-react";
+import { Plus, Loader2, Edit, Trash2, X, Save, Shield } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 interface User {
   id: number;
@@ -16,6 +18,8 @@ interface User {
 }
 
 export default function UsersPage() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -27,6 +31,16 @@ export default function UsersPage() {
   const [addForm, setAddForm] = useState({ name: "", email: "", password: "" });
   const [addLoading, setAddLoading] = useState(false);
   const toast = useToast();
+
+  // Check if user is admin
+  useEffect(() => {
+    if (status === "loading") return;
+
+    if (!session || session.user.role !== "ADMIN") {
+      router.push("/dashboard");
+      return;
+    }
+  }, [session, status, router]);
 
   useEffect(() => {
     fetchUsers();
@@ -158,6 +172,42 @@ export default function UsersPage() {
       setActionLoading(null);
     }
   };
+
+  // Show loading while checking session
+  if (status === "loading") {
+    return (
+      <main className="p-6">
+        <div className="flex items-center justify-center py-12">
+          <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+          <span className="ml-2 text-slate-600 dark:text-slate-300">
+            Loading...
+          </span>
+        </div>
+      </main>
+    );
+  }
+
+  // Show access denied for non-admin users
+  if (!session || session.user.role !== "ADMIN") {
+    return (
+      <main className="p-6">
+        <div className="flex items-center justify-center py-12">
+          <div className="text-center">
+            <Shield className="h-16 w-16 text-red-500 mx-auto mb-4" />
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
+              Access Denied
+            </h2>
+            <p className="text-slate-600 dark:text-slate-400 mb-4">
+              You need administrator privileges to access this page.
+            </p>
+            <Button onClick={() => router.push("/dashboard")}>
+              Back to Dashboard
+            </Button>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   if (loading) {
     return (

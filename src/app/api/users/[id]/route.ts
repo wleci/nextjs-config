@@ -18,7 +18,7 @@ export async function GET(
 
         // Users can only view their own profile or if they're admin
         const isOwnProfile = parseInt(currentUser.id!) === userId
-        const isAdmin = currentUser.email === 'admin@example.com' // Simple admin check
+        const isAdmin = currentUser.role === 'ADMIN'
 
         if (!isOwnProfile && !isAdmin) {
             return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
@@ -70,7 +70,7 @@ export async function PUT(
 
         // Users can only edit their own profile or if they're admin
         const isOwnProfile = parseInt(currentUser.id!) === userId
-        const isAdmin = currentUser.email === 'admin@example.com'
+        const isAdmin = currentUser.role === 'ADMIN'
 
         if (!isOwnProfile && !isAdmin) {
             return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
@@ -136,8 +136,7 @@ export async function DELETE(
         const currentUser = await getCurrentUser()
 
         // Only admin can delete users
-        const isAdmin = currentUser.email === 'admin@example.com'
-        if (!isAdmin) {
+        if (currentUser.role !== 'ADMIN') {
             return NextResponse.json({ error: 'Forbidden - Admin access required' }, { status: 403 })
         }
 

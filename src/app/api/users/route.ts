@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server'
-import { checkAuth } from '@/lib/auth-middleware'
+import { checkAdminAuth } from '@/lib/auth-middleware'
 import { prisma } from '@/lib/prisma'
 
 export async function GET() {
     try {
-        // Check authentication
-        const authError = await checkAuth()
+        // Check admin authentication
+        const authError = await checkAdminAuth()
         if (authError) return authError
 
         const users = await prisma.user.findMany({
@@ -33,8 +33,8 @@ export async function GET() {
 
 export async function POST(request: Request) {
     try {
-        // Check authentication
-        const authError = await checkAuth()
+        // Check admin authentication
+        const authError = await checkAdminAuth()
         if (authError) return authError
 
         const body = await request.json()

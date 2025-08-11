@@ -33,9 +33,15 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     }
   };
 
-  const sidebarItems = [
+  const allSidebarItems = [
     { id: "overview", label: "Overview", icon: Home, href: "/dashboard" },
-    { id: "users", label: "Users", icon: Users, href: "/dashboard/users" },
+    {
+      id: "users",
+      label: "Users",
+      icon: Users,
+      href: "/dashboard/users",
+      adminOnly: true,
+    },
     {
       id: "analytics",
       label: "Analytics",
@@ -49,6 +55,14 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       href: "/dashboard/settings",
     },
   ];
+
+  // Filter sidebar items based on user role
+  const sidebarItems = allSidebarItems.filter((item) => {
+    if (item.adminOnly) {
+      return session?.user?.role === "ADMIN";
+    }
+    return true;
+  });
 
   const getPageTitle = () => {
     const item = sidebarItems.find((item) => item.href === pathname);

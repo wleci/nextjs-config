@@ -13,7 +13,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials) {
+                console.log("🔐 Auth attempt for:", credentials?.email)
+
                 if (!credentials?.email || !credentials?.password) {
+                    console.log("❌ Missing credentials")
                     return null
                 }
 
@@ -26,12 +29,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     })
 
                     if (!user) {
+                        console.log("❌ User not found:", credentials.email)
                         return null
                     }
 
+                    console.log("✅ User found:", user.email, "Role:", user.role)
+
                     // Verify password with bcrypt
                     if (!user.password) {
-                        // User doesn't have a password set
+                        console.log("❌ User has no password set")
                         return null
                     }
 
@@ -41,16 +47,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     )
 
                     if (!isValidPassword) {
+                        console.log("❌ Invalid password for:", user.email)
                         return null
                     }
 
+                    console.log("✅ Password valid, logging in:", user.email)
                     return {
                         id: user.id.toString(),
                         email: user.email,
                         name: user.name,
+                        role: user.role,
                     }
                 } catch (error) {
-                    console.error("Auth error:", error)
+                    console.error("❌ Auth error:", error)
                     return null
                 }
             }
@@ -63,17 +72,48 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         async jwt({ token, user }) {
             if (user) {
                 token.id = user.id
+                token.role = user.role
             }
             return token
         },
         async session({ session, token }) {
             if (token) {
-                session.user.id = token.id as string
+                session.user.id = token.id || ""
+                session.user.role = token.role || "USER"
             }
             return session
         },
     },
     session: {
         strategy: "jwt",
+    },
+    cookies: {
+        sessionToken: {
+            name: "wleci.session-token",
+            options: {
+                httpOnly: true,
+                sameSite: "lax",
+                path: "/",
+                secure: process.env.NODE_ENV === "production",
+            },
+        },
+        callbackUrl: {
+            name: "wleci.callback-url",
+            options: {
+                httpOnly: true,
+                sameSite: "lax",
+                path: "/",
+                secure: process.env.NODE_ENV === "production",
+            },
+        },
+        csrfToken: {
+            name: "wleci.csrf-token",
+            options: {
+                httpOnly: true,
+                sameSite: "lax",
+                path: "/",
+                secure: process.env.NODE_ENV === "production",
+            },
+        },
     },
 })
