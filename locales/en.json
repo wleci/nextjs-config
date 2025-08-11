@@ -25,5 +25,68 @@
             "title": "Beautiful Design",
             "description": "Modern UI with Tailwind CSS and shadcn/ui components"
         }
+    },
+    "auth": {
+        "login": {
+            "title": "Welcome back",
+            "subtitle": "Sign in to your account",
+            "email": "Email address",
+            "password": "Password",
+            "rememberMe": "Remember me",
+            "forgotPassword": "Forgot password?",
+            "signIn": "Sign in",
+            "signingIn": "Signing in...",
+            "noAccount": "Don't have an account?",
+            "signUp": "Sign up"
+        },
+        "register": {
+            "title": "Create account",
+            "subtitle": "Sign up to get started",
+            "fullName": "Full name",
+            "email": "Email address",
+            "password": "Password",
+            "confirmPassword": "Confirm password",
+            "createAccount": "Create account",
+            "creatingAccount": "Creating account...",
+            "haveAccount": "Already have an account?",
+            "signIn": "Sign in"
+        },
+        "backToHome": "Back to home"
+    },
+    "dashboard": {
+        "title": "Dashboard",
+        "overview": "Overview",
+        "users": "Users",
+        "posts": "Posts",
+        "analytics": "Analytics",
+        "settings": "Settings",
+        "logout": "Logout",
+        "search": "Search...",
+        "backToSite": "Back to site",
+        "loading": "Loading dashboard...",
+        "stats": {
+            "totalUsers": "Total Users",
+            "totalPosts": "Total Posts",
+            "publishedPosts": "Published Posts",
+            "activeUsers": "Active Users",
+            "fromLastMonth": "from last month"
+        },
+        "recentUsers": "Recent Users",
+        "recentPosts": "Recent Posts",
+        "allUsers": "All Users",
+        "allPosts": "All Posts",
+        "addUser": "Add User",
+        "newPost": "New Post",
+        "edit": "Edit",
+        "published": "Published",
+        "draft": "Draft",
+        "posts": "posts",
+        "joined": "Joined",
+        "noName": "No name",
+        "by": "by",
+        "analyticsComingSoon": "Analytics Coming Soon",
+        "analyticsDescription": "Advanced analytics and reporting features will be available here.",
+        "settingsPanel": "Settings Panel",
+        "settingsDescription": "Application settings and configuration options will be available here."
     }
 }

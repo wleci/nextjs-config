@@ -10,7 +10,6 @@ import {
   Zap,
   Code,
   Palette,
-  Globe,
 } from "lucide-react";
 import { useState } from "react";
 import { useTranslations } from "next-intl";

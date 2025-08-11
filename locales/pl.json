@@ -25,5 +25,68 @@
             "title": "Piękny design",
             "description": "Nowoczesny interfejs z Tailwind CSS i komponentami shadcn/ui"
         }
+    },
+    "auth": {
+        "login": {
+            "title": "Witaj ponownie",
+            "subtitle": "Zaloguj się do swojego konta",
+            "email": "Adres email",
+            "password": "Hasło",
+            "rememberMe": "Zapamiętaj mnie",
+            "forgotPassword": "Zapomniałeś hasła?",
+            "signIn": "Zaloguj się",
+            "signingIn": "Logowanie...",
+            "noAccount": "Nie masz konta?",
+            "signUp": "Zarejestruj się"
+        },
+        "register": {
+            "title": "Utwórz konto",
+            "subtitle": "Zarejestruj się, aby rozpocząć",
+            "fullName": "Imię i nazwisko",
+            "email": "Adres email",
+            "password": "Hasło",
+            "confirmPassword": "Potwierdź hasło",
+            "createAccount": "Utwórz konto",
+            "creatingAccount": "Tworzenie konta...",
+            "haveAccount": "Masz już konto?",
+            "signIn": "Zaloguj się"
+        },
+        "backToHome": "Powrót do strony głównej"
+    },
+    "dashboard": {
+        "title": "Panel administracyjny",
+        "overview": "Przegląd",
+        "users": "Użytkownicy",
+        "posts": "Posty",
+        "analytics": "Analityka",
+        "settings": "Ustawienia",
+        "logout": "Wyloguj",
+        "search": "Szukaj...",
+        "backToSite": "Powrót do strony",
+        "loading": "Ładowanie panelu...",
+        "stats": {
+            "totalUsers": "Wszyscy użytkownicy",
+            "totalPosts": "Wszystkie posty",
+            "publishedPosts": "Opublikowane posty",
+            "activeUsers": "Aktywni użytkownicy",
+            "fromLastMonth": "z ostatniego miesiąca"
+        },
+        "recentUsers": "Najnowsi użytkownicy",
+        "recentPosts": "Najnowsze posty",
+        "allUsers": "Wszyscy użytkownicy",
+        "allPosts": "Wszystkie posty",
+        "addUser": "Dodaj użytkownika",
+        "newPost": "Nowy post",
+        "edit": "Edytuj",
+        "published": "Opublikowany",
+        "draft": "Szkic",
+        "posts": "postów",
+        "joined": "Dołączył",
+        "noName": "Brak nazwy",
+        "by": "przez",
+        "analyticsComingSoon": "Analityka wkrótce",
+        "analyticsDescription": "Zaawansowane funkcje analityki i raportowania będą dostępne tutaj.",
+        "settingsPanel": "Panel ustawień",
+        "settingsDescription": "Ustawienia aplikacji i opcje konfiguracji będą dostępne tutaj."
     }
 }
