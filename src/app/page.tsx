@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -188,13 +189,15 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <Button
-              size="lg"
-              className="gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-            >
-              <ExternalLink className="h-5 w-5" />
-              {t("hero.getStarted")}
-            </Button>
+            <Link href="/auth/register">
+              <Button
+                size="lg"
+                className="gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+              >
+                <ExternalLink className="h-5 w-5" />
+                {t("hero.getStarted")}
+              </Button>
+            </Link>
             <Button variant="outline" size="lg" className="gap-2">
               <Github className="h-5 w-5" />
               {t("hero.viewSource")}

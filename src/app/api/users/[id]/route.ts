@@ -54,6 +54,79 @@ export async function GET(
     }
 }
 
+export async function PUT(
+    request: Request,
+    { params }: { params: Promise<{ id: string }> }
+) {
+    try {
+        // Check authentication
+        const currentUser = await getCurrentUser()
+
+        const { id } = await params
+        const userId = parseInt(id)
+        if (isNaN(userId)) {
+            return NextResponse.json({ error: 'Invalid user ID' }, { status: 400 })
+        }
+
+        // Users can only edit their own profile or if they're admin
+        const isOwnProfile = parseInt(currentUser.id!) === userId
+        const isAdmin = currentUser.email === 'admin@example.com'
+
+        if (!isOwnProfile && !isAdmin) {
+            return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+        }
+
+        const body = await request.json()
+        const { name, email } = body
+
+        // Validate input
+        if (!email || typeof email !== 'string') {
+            return NextResponse.json({ error: 'Valid email is required' }, { status: 400 })
+        }
+
+        // Check if email is already taken by another user
+        const existingUser = await prisma.user.findFirst({
+            where: {
+                email: email,
+                NOT: { id: userId }
+            }
+        })
+
+        if (existingUser) {
+            return NextResponse.json({ error: 'Email already exists' }, { status: 400 })
+        }
+
+        // Update user
+        const updatedUser = await prisma.user.update({
+            where: { id: userId },
+            data: {
+                name: name || null,
+                email: email,
+            },
+            select: {
+                id: true,
+                email: true,
+                name: true,
+                createdAt: true,
+                updatedAt: true,
+            },
+        })
+
+        return NextResponse.json(updatedUser)
+    } catch (error) {
+        if (error instanceof Error && error.message === 'Not authenticated') {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+        }
+
+        console.error('Failed to update user:', error)
+
+        return NextResponse.json(
+            { error: 'Failed to update user' },
+            { status: 500 }
+        )
+    }
+}
+
 export async function DELETE(
     request: Request,
     { params }: { params: Promise<{ id: string }> }
