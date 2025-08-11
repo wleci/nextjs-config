@@ -1,43 +1,38 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Users, TrendingUp, Activity, BarChart3 } from "lucide-react";
+import { Users, TrendingUp, Activity, BarChart3, Loader2 } from "lucide-react";
 
 interface User {
   id: number;
   email: string;
   name: string | null;
   createdAt: string;
+  updatedAt: string;
 }
 
 export default function DashboardOverview() {
-  // Mock data - replace with real API calls later
-  const users: User[] = [
-    {
-      id: 1,
-      email: "john@example.com",
-      name: "John Doe",
-      createdAt: "2024-01-15T10:00:00Z",
-    },
-    {
-      id: 2,
-      email: "jane@example.com",
-      name: "Jane Smith",
-      createdAt: "2024-01-20T14:30:00Z",
-    },
-    {
-      id: 3,
-      email: "bob@example.com",
-      name: "Bob Wilson",
-      createdAt: "2024-02-01T09:15:00Z",
-    },
-    {
-      id: 4,
-      email: "alice@example.com",
-      name: "Alice Johnson",
-      createdAt: "2024-02-05T16:45:00Z",
-    },
-  ];
+  const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch("/api/users");
+      if (response.ok) {
+        const data = await response.json();
+        setUsers(data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch users:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const stats = [
     {
@@ -73,6 +68,19 @@ export default function DashboardOverview() {
       change: "+0.1%",
     },
   ];
+
+  if (loading) {
+    return (
+      <main className="p-6">
+        <div className="flex items-center justify-center py-12">
+          <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+          <span className="ml-2 text-slate-600 dark:text-slate-300">
+            Loading dashboard...
+          </span>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="p-6">
@@ -136,6 +144,11 @@ export default function DashboardOverview() {
                   </span>
                 </div>
               ))}
+              {users.length === 0 && (
+                <p className="text-center text-slate-500 py-4">
+                  No users found
+                </p>
+              )}
             </div>
           </div>
 
@@ -144,52 +157,29 @@ export default function DashboardOverview() {
               Recent Activity
             </h3>
             <div className="space-y-3">
-              {[
-                {
-                  action: "User login",
-                  user: "John Doe",
-                  time: "2 minutes ago",
-                },
-                {
-                  action: "Profile updated",
-                  user: "Jane Smith",
-                  time: "5 minutes ago",
-                },
-                {
-                  action: "New user registered",
-                  user: "Bob Wilson",
-                  time: "10 minutes ago",
-                },
-                {
-                  action: "Settings changed",
-                  user: "Alice Johnson",
-                  time: "15 minutes ago",
-                },
-                {
-                  action: "User login",
-                  user: "John Doe",
-                  time: "20 minutes ago",
-                },
-              ].map((activity, index) => (
+              {users.slice(0, 5).map((user) => (
                 <div
-                  key={index}
+                  key={user.id}
                   className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-700 rounded-lg"
                 >
                   <div>
                     <p className="font-medium text-slate-900 dark:text-white">
-                      {activity.action}
+                      User registered
                     </p>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
-                      by {activity.user}
+                      {user.name || user.email}
                     </p>
                   </div>
                   <div className="text-right">
                     <span className="text-xs text-slate-500">
-                      {activity.time}
+                      {new Date(user.createdAt).toLocaleDateString()}
                     </span>
                   </div>
                 </div>
               ))}
+              {users.length === 0 && (
+                <p className="text-center text-slate-500 py-4">No activity</p>
+              )}
             </div>
           </div>
         </div>
