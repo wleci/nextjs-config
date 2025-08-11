@@ -10,11 +10,19 @@ import {
   Zap,
   Code,
   Palette,
+  Globe,
 } from "lucide-react";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const t = useTranslations();
+
+  const switchLanguage = (lang: string) => {
+    document.cookie = `lang=${lang}; path=/; max-age=31536000`;
+    window.location.reload();
+  };
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-900">
@@ -46,23 +54,41 @@ export default function Home() {
                 href="#home"
                 className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors"
               >
-                Home
+                {t("nav.home")}
               </a>
               <a
                 href="#features"
                 className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors"
               >
-                Features
+                {t("nav.features")}
               </a>
               <a
                 href="#docs"
                 className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors"
               >
-                Docs
+                {t("nav.docs")}
               </a>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => switchLanguage("en")}
+                  className="px-2"
+                >
+                  EN
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => switchLanguage("pl")}
+                  className="px-2"
+                >
+                  PL
+                </Button>
+              </div>
               <Button variant="outline" size="sm" className="gap-2">
                 <Github className="h-4 w-4" />
-                GitHub
+                {t("nav.github")}
               </Button>
             </motion.div>
 
@@ -92,20 +118,38 @@ export default function Home() {
             >
               <div className="flex flex-col gap-4">
                 <a href="#home" className="text-slate-600 dark:text-slate-300">
-                  Home
+                  {t("nav.home")}
                 </a>
                 <a
                   href="#features"
                   className="text-slate-600 dark:text-slate-300"
                 >
-                  Features
+                  {t("nav.features")}
                 </a>
                 <a href="#docs" className="text-slate-600 dark:text-slate-300">
-                  Docs
+                  {t("nav.docs")}
                 </a>
+                <div className="flex gap-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => switchLanguage("en")}
+                    className="px-2"
+                  >
+                    EN
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => switchLanguage("pl")}
+                    className="px-2"
+                  >
+                    PL
+                  </Button>
+                </div>
                 <Button variant="outline" size="sm" className="gap-2 w-fit">
                   <Github className="h-4 w-4" />
-                  GitHub
+                  {t("nav.github")}
                 </Button>
               </div>
             </motion.div>
@@ -123,10 +167,10 @@ export default function Home() {
           >
             <h1 className="text-5xl md:text-7xl font-bold mb-6">
               <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-                Modern
+                {t("hero.title")}
               </span>
               <br />
-              Next.js Template
+              {t("hero.subtitle")}
             </h1>
           </motion.div>
 
@@ -136,8 +180,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Beautiful, fast, and modern web applications with Framer Motion,
-            Tailwind CSS, and shadcn/ui components.
+            {t("hero.description")}
           </motion.p>
 
           <motion.div
@@ -151,11 +194,11 @@ export default function Home() {
               className="gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
             >
               <ExternalLink className="h-5 w-5" />
-              Get Started
+              {t("hero.getStarted")}
             </Button>
             <Button variant="outline" size="lg" className="gap-2">
               <Github className="h-5 w-5" />
-              View Source
+              {t("hero.viewSource")}
             </Button>
           </motion.div>
 
@@ -169,21 +212,18 @@ export default function Home() {
             {[
               {
                 icon: Zap,
-                title: "Lightning Fast",
-                description:
-                  "Optimized performance with Next.js 15 and modern best practices",
+                title: t("features.fast.title"),
+                description: t("features.fast.description"),
               },
               {
                 icon: Code,
-                title: "Developer Ready",
-                description:
-                  "TypeScript, ESLint, and Prettier configured out of the box",
+                title: t("features.developer.title"),
+                description: t("features.developer.description"),
               },
               {
                 icon: Palette,
-                title: "Beautiful Design",
-                description:
-                  "Modern UI with Tailwind CSS and shadcn/ui components",
+                title: t("features.design.title"),
+                description: t("features.design.description"),
               },
             ].map((feature, index) => (
               <motion.div

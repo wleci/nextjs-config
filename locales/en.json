@@ -1,0 +1,29 @@
+{
+    "nav": {
+        "home": "Home",
+        "features": "Features",
+        "docs": "Docs",
+        "github": "GitHub"
+    },
+    "hero": {
+        "title": "Modern",
+        "subtitle": "Next.js Template",
+        "description": "Beautiful, fast, and modern web applications with Framer Motion, Tailwind CSS, and shadcn/ui components.",
+        "getStarted": "Get Started",
+        "viewSource": "View Source"
+    },
+    "features": {
+        "fast": {
+            "title": "Lightning Fast",
+            "description": "Optimized performance with Next.js 15 and modern best practices"
+        },
+        "developer": {
+            "title": "Developer Ready",
+            "description": "TypeScript, ESLint, and Prettier configured out of the box"
+        },
+        "design": {
+            "title": "Beautiful Design",
+            "description": "Modern UI with Tailwind CSS and shadcn/ui components"
+        }
+    }
+}

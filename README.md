@@ -14,9 +14,10 @@ A modern Next.js template with beautiful animations, responsive navbar, and eleg
 - 🎭 **Smooth Animations** - Powered by Framer Motion 12.23.12
 - 🎯 **Icons** - Beautiful Lucide React icons 0.539.0
 - 🌙 **Dark Mode** - Built-in theme support
+- 🌍 **Internationalization** - Multi-language support with next-intl
 - 📱 **Responsive** - Mobile-first design
 - ⚡ **Performance** - Optimized for speed with Turbopack
-- 🔧 **TypeScript** - Full type safety
+- � **\*TypeScript** - Full type safety
 - 🔍 **SEO Ready** - Auto-generated sitemap.xml and robots.txt
 
 ## 🛠️ Tech Stack
@@ -28,6 +29,7 @@ A modern Next.js template with beautiful animations, responsive navbar, and eleg
 - **Components:** shadcn/ui
 - **Animations:** Framer Motion 12.23.12
 - **Icons:** Lucide React 0.539.0
+- **i18n:** next-intl
 
 ## 🚀 Quick Start
 
@@ -146,6 +148,77 @@ Add your domain to `.env.local`:
 NEXT_PUBLIC_BASE_URL=https://your-domain.com
 ```
 
+## 🌍 Internationalization
+
+This template includes full internationalization support with next-intl:
+
+### Supported Languages
+
+- 🇺🇸 **English** (`en`)
+- 🇵🇱 **Polish** (`pl`)
+
+### Language Switching
+
+Users can switch languages using the language switcher in the navigation bar. The selected language is stored in a cookie (`lang`) and persists across sessions.
+
+### Adding New Languages
+
+1. **Create a new locale file**
+
+   ```bash
+   # Add your language file
+   touch locales/de.json  # German example
+   ```
+
+2. **Add translations**
+
+   ```json
+   {
+     "nav": {
+       "home": "Startseite",
+       "features": "Funktionen",
+       "docs": "Dokumentation",
+       "github": "GitHub"
+     },
+     "hero": {
+       "title": "Modern",
+       "subtitle": "Next.js Vorlage",
+       "description": "Schöne, schnelle und moderne Webanwendungen...",
+       "getStarted": "Loslegen",
+       "viewSource": "Quellcode anzeigen"
+     }
+   }
+   ```
+
+3. **Update the language switcher**
+   ```tsx
+   // Add your language button in src/app/page.tsx
+   <Button
+     variant="ghost"
+     size="sm"
+     onClick={() => switchLanguage("de")}
+     className="px-2"
+   >
+     DE
+   </Button>
+   ```
+
+### Configuration
+
+The i18n configuration is located in `src/i18n/request.ts`:
+
+```typescript
+export default getRequestConfig(async () => {
+  const cookieStore = await cookies();
+  const locale = cookieStore.get("lang")?.value || "pl";
+
+  return {
+    locale,
+    messages: (await import(`../../locales/${locale}.json`)).default,
+  };
+});
+```
+
 ## 📁 Project Structure
 
 ```
@@ -171,8 +244,13 @@ src/
 │       ├── button.tsx
 │       ├── card.tsx
 │       └── badge.tsx
-└── lib/
-    └── utils.ts
+├── i18n/
+│   └── request.ts
+├── lib/
+│   └── utils.ts
+└── locales/
+    ├── en.json
+    └── pl.json
 ```
 
 ## 🚀 Deployment

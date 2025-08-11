@@ -1,0 +1,29 @@
+{
+    "nav": {
+        "home": "Strona główna",
+        "features": "Funkcje",
+        "docs": "Dokumentacja",
+        "github": "GitHub"
+    },
+    "hero": {
+        "title": "Nowoczesny",
+        "subtitle": "Szablon Next.js",
+        "description": "Piękne, szybkie i nowoczesne aplikacje internetowe z Framer Motion, Tailwind CSS i komponentami shadcn/ui.",
+        "getStarted": "Rozpocznij",
+        "viewSource": "Zobacz kod źródłowy"
+    },
+    "features": {
+        "fast": {
+            "title": "Błyskawicznie szybki",
+            "description": "Zoptymalizowana wydajność z Next.js 15 i nowoczesnymi najlepszymi praktykami"
+        },
+        "developer": {
+            "title": "Gotowy dla programistów",
+            "description": "TypeScript, ESLint i Prettier skonfigurowane od razu"
+        },
+        "design": {
+            "title": "Piękny design",
+            "description": "Nowoczesny interfejs z Tailwind CSS i komponentami shadcn/ui"
+        }
+    }
+}
